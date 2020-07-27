@@ -20,7 +20,8 @@ class AppBootHook {
     assert(queue.prefix, '[egg-graphql-compose-bullmq] missing queue.prefix options for Bullmq');
     assert(redis, '[egg-graphql-compose-bullmq] missing redis options for Bullmq');
 
-    const { schemaComposer } = GraphqlCompose;
+    const { SchemaComposer } = GraphqlCompose;
+    const schemaComposer = new SchemaComposer();
     const { queryFields, mutationFields, subscriptionFields } = composeBull({
       schemaComposer,
       typePrefix,
