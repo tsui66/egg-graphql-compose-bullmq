@@ -29,7 +29,7 @@ class AppBootHook {
       jobDataTC,
       redis,
     };
-    if (queue.name && queue.prefix) {
+    if (queue && queue.name && queue.prefix) {
       Object.assign(composeBullConfig, {
         queue: {
           name: queue.name,
