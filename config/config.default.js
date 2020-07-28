@@ -27,9 +27,9 @@ exports.graphqlComposeBullmq = {
   typePrefix: 'Prefix',
   // eslint-disable-next-line quotes
   jobDataTC: `type MyJobData { fieldA: String! fieldB: String }`,
-  queue: {
-    name: 'fetch_metrics',
-    prefix: 'bull.demo',
-  },
+  // queue: {
+  //   name: 'fetch_metrics',
+  //   prefix: 'bull.demo',
+  // },
   redis: 'redis://127.0.0.1:6379', // redisio options or egg-redis instance name
 };
