@@ -20,8 +20,9 @@ class AppBootHook {
     assert(queue.prefix, '[egg-graphql-compose-bullmq] missing queue.prefix options for Bullmq');
     assert(redis, '[egg-graphql-compose-bullmq] missing redis options for Bullmq');
 
-    const { SchemaComposer } = GraphqlCompose;
-    const schemaComposer = new SchemaComposer();
+    const { sc, SchemaComposer } = GraphqlCompose;
+    // create a new SchemaComposer instance or share global instance with other graphql-compose-plugins 
+    const schemaComposer = this.app.config.graphqlComposeBullmq.signalton ? sc : new SchemaComposer();
     const { queryFields, mutationFields, subscriptionFields } = composeBull({
       schemaComposer,
       typePrefix,

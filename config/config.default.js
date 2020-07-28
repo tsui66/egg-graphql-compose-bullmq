@@ -20,7 +20,9 @@ exports.graphqlComposeBullmq = {
   // * onPreGraphQL() {},
   // 开发工具 graphiQL 路由前的拦截器，建议用于做权限操作(如只提供开发者使用)
   // * onPreGraphiQL() {},
-
+  
+  // create a new SchemaComposer instance or share global instance with other graphql-compose-plugins 
+  signalton: false,
   // reference https://github.com/graphql-compose/graphql-compose-bullmq
   typePrefix: 'Prefix',
   // eslint-disable-next-line quotes
