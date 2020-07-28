@@ -16,23 +16,28 @@ class AppBootHook {
   async didLoad() {
     const { typePrefix, jobDataTC, queue, redis } = this.app.config.graphqlComposeBullmq;
     assert(typePrefix, '[egg-graphql-compose-bullmq] missing typePrefix options for Bullmq');
-    assert(queue.name, '[egg-graphql-compose-bullmq] missing queue.name options for Bullmq');
-    assert(queue.prefix, '[egg-graphql-compose-bullmq] missing queue.prefix options for Bullmq');
+    // assert(queue.name, '[egg-graphql-compose-bullmq] missing queue.name options for Bullmq');
+    // assert(queue.prefix, '[egg-graphql-compose-bullmq] missing queue.prefix options for Bullmq');
     assert(redis, '[egg-graphql-compose-bullmq] missing redis options for Bullmq');
 
     const { sc, SchemaComposer } = GraphqlCompose;
     // create a new SchemaComposer instance or share global instance with other graphql-compose-plugins 
     const schemaComposer = this.app.config.graphqlComposeBullmq.signalton ? sc : new SchemaComposer();
-    const { queryFields, mutationFields, subscriptionFields } = composeBull({
+    const composeBullConfig = {
       schemaComposer,
       typePrefix,
       jobDataTC,
-      queue: {
-        name: queue.name,
-        prefix: queue.prefix,
-      },
       redis,
-    });
+    };
+    if (queue.name && queue.prefix) {
+      Object.assign(composeBullConfig, {
+        queue: {
+          name: queue.name,
+          prefix: queue.prefix,
+        }
+      })
+    }
+    const { queryFields, mutationFields, subscriptionFields } = composeBull(composeBullConfig);
     schemaComposer.Query.addFields({
       ...queryFields,
     });
